@@ -4,14 +4,16 @@ const PokemonList = ({ pokemons }) => {
 	return (
 		<div className='PokemonList'>
 			{pokemons?.map((pokemon, index) => {
-				return(
-				<PokemonCard
-					key={index}
-					name={pokemon.name}
-					image={pokemon.sprites.front_default}
-					abilities={pokemon.abilities.map(ability=>ability.ability.name).join(', ')}
-				/>
-			)
+				return (
+					<PokemonCard
+						key={index}
+						id={pokemon.id}
+						name={pokemon.name}
+						image={pokemon.sprites.front_default}
+						favorite={pokemon.favorite}
+						abilities={pokemon.types.map(elem => elem.type.name).join(', ')}
+					/>
+				);
 			})}
 		</div>
 	);
