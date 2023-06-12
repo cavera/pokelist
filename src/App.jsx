@@ -4,27 +4,17 @@ import { Col, Spin } from 'antd';
 import Searcher from './components/Searcher';
 import PokemonList from './components/PokemonList';
 import logo from './assets/logo.svg';
-import { getPokemons } from './api';
-import { getPokemonsWithDetails, setLoading } from './actions';
-// import {toJS} from 'immutable'
+import { fetchPokemonsWithDetails } from './slices/dataSlice';
 
 function App() {
-	const pokemons = useSelector(state => state.getIn(['data', 'pokemons'], shallowEqual)).toJS();
-	// const loading = useSelector(state => state.loading);
-	const loading = useSelector(state => state.getIn(['ui', 'loading']));
+	const pokemons = useSelector(state => state.data.pokemons, shallowEqual);
+	const loading = useSelector(state => state.ui.loading);
 
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		const fetchPokemons = async () => {
-			dispatch(setLoading(true));
-			const pokemonsRes = await getPokemons();
-			dispatch(getPokemonsWithDetails(pokemonsRes));
-			dispatch(setLoading(false));
-		};
-
-		fetchPokemons();
-	}, [dispatch]);
+		dispatch(fetchPokemonsWithDetails());
+	}, []);
 
 	return (
 		<>
